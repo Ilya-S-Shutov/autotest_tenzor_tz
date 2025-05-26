@@ -16,5 +16,6 @@ class SabyContactsPage(BasePage):
 
     @log_selenium_actions
     def click_clients_banner(self) -> None:
+        """Кликнуть по баннеру "Тензор" и переключить вкладку."""
         self.click(self.TENSOR_CLIENTS_BANNER_LOCATOR)
         self.switch_to_new_tab()

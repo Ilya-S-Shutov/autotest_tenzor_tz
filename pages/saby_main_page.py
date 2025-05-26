@@ -14,6 +14,7 @@ class SabyMainPage(BasePage):
 
     @log_selenium_actions
     def go_to_contacts(self) -> None:
+        """Перейти в "Контакты"."""
         self.click(self.CONTACTS_LOCATOR)
         self.click(self.OFFICES_LOCATOR)
 
