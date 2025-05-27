@@ -28,6 +28,7 @@ class BasePage:
 
     @log_selenium_actions
     def find_elements(self, locator: tuple[str, str]) -> list[WebElement] | str:
+        """Найти все элементы, соответствующие локатору."""
         return self.wait.until(EC.presence_of_all_elements_located(locator),
                                message=f"Can't find elements by locator {locator}.")
 
