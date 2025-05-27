@@ -1,6 +1,9 @@
+import os
+
 import pytest
 
 from pages.saby_contacts_page import SabyContactsPage
+from pages.saby_download_page import SabyDownloadPage
 from pages.saby_main_page import SabyMainPage
 from pages.tensor_about_page import TensorAboutPage
 from pages.tensor_main_page import TensorMainPage
@@ -68,3 +71,27 @@ class TestSuit2:
          f'получено: "{result_region_info['region_name']}".')
 
         assert start_partners_dict != result_region_info['partners'], 'Список партнёров не изменился.'
+
+
+class TestSuit3:
+
+    def test_step_1(self, driver):
+        from time import sleep
+
+        saby_main_page = SabyMainPage(driver)
+        saby_main_page.open()
+        saby_main_page.go_to_downloads()
+        saby_download_page = SabyDownloadPage(driver)
+        file_info = saby_download_page.click_download_link()
+
+        max_wait_time = 30
+        waited = 0
+        while not os.path.exists(file_info[0]) and waited < max_wait_time:
+            sleep(1)
+            waited += 1
+
+        assert os.path.exists(file_info[0]), "Файл не был скачан"
+        size_mb = round(os.path.getsize(file_info[0]) / 1024 / 1024, 2)
+        assert file_info[1] - 0.01 <= size_mb <= file_info[1] + 0.01, \
+            f"Фактический размер файла ({size_mb}) MB не соответствует указанному ({file_info[1]} MB)."
+        os.remove(file_info[0])
