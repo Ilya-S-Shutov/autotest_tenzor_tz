@@ -11,6 +11,7 @@ class BasePage:
 
     def __init__(self, driver: WebDriver, url: str):
         self.driver = driver
+        driver.implicitly_wait(0)
         self.wait = WebDriverWait(driver, 5)
         self.URL = url
 
